@@ -1,0 +1,6 @@
+numpy
+scipy
+scikit-learn
+soundfile
+watchdog
+tflite-runtime
