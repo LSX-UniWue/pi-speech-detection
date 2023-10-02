@@ -1,5 +1,7 @@
-# pi-speech-detection
-Code and tutorials for the detection of human speech in beehive audio data
+# Automatic Speech Detection on a Smart Beehive‘s Raspberry Pi
+
+This repository contains the code and tutorials for the detection of human speech in beehive audio data. It is part of our paper "Automatic Speech Detection on a Smart Beehive‘s Raspberry Pi", accepted for publication and presentation at LWDA2023 in Marburg, October 2023.
+
 ## Setup the system
 Run:
 
