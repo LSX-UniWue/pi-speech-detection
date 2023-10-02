@@ -46,6 +46,9 @@ then cd to the folder with the Python 3.X library source code and run:
 sudo make 
 sudo make install
 ```
-## Setup system services
 
 ## Run the code
+
+To evaluate the performance of a smart system -- a Raspberry Pi in our case --, run `python3 inference_evaluation.py`.
+Our trained models, _bulbul_ (for embedding extraction) and a _k_-NN (for prediction on top) are in the models subfolder.
+
