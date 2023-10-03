@@ -21,14 +21,12 @@ class Watcher:
         self.KNN_FILE = knn_file
         self.DIRECTORY_TO_WATCH = directory_to_watch
         self.observer = Observer()
-        self.move_files = bool(move_files)
 
         print("Watcher initialized")
 
     def run(self):
         os.makedirs(self.out_dir, exist_ok=True)
-        event_handler = Handler(model_file=self.MODEL_FILE, knn_file=self.KNN_FILE, out_dir=self.out_dir,
-                                move_files=self.move_files)
+        event_handler = Handler(model_file=self.MODEL_FILE, knn_file=self.KNN_FILE, out_dir=self.out_dir)
         self.observer.schedule(event_handler, self.DIRECTORY_TO_WATCH, recursive=True)
         self.observer.start()
         try:
@@ -44,15 +42,13 @@ class Watcher:
 
 class Handler(FileSystemEventHandler):
 
-    def __init__(self, model_file: str, knn_file: str, out_dir: str, move_files: bool):
-
+    def __init__(self, model_file: str, knn_file: str, out_dir: str):
         self.interpreter = tflite.Interpreter(model_path=model_file)
         self.interpreter.allocate_tensors()
         self.input_details = self.interpreter.get_input_details()
         self.output_details = self.interpreter.get_output_details()
         self.knn: sklearn.neighbors.KNeighborsClassifier = self.__load_knn(path_to_knn=knn_file)
         self.out_dir = out_dir
-        self.move_files = move_files
 
     def log_prediction(self, filepath: str, predicted_class: int, audio_loading_time: float, knn_time: float,
                        inference_time: float):
@@ -138,5 +134,5 @@ if __name__ == '__main__':
     args.add_argument("--knn-file", type=str, default="./models/knn_5.pkl")
     args = args.parse_args()
     w = Watcher(out_dir=args.out_dir, model_file=args.model_file, knn_file=args.knn_file,
-                directory_to_watch=args.dir_to_watch, move_files=args.move_file)
+                directory_to_watch=args.dir_to_watch)
     w.run()
