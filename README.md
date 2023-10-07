@@ -3,51 +3,26 @@
 This repository contains the code and tutorials for the detection of human speech in beehive audio data. It is part of our paper "Automatic Speech Detection on a Smart Beehive‘s Raspberry Pi", accepted for publication and presentation at LWDA2023 in Marburg, October 2023.
 
 ## Setup the system
-Run:
+If not already the case, upgrade the OS version of the Raspberry Pi to Bullseye.
 
-```
-sudo apt update
-sudo apt upgrade
-```
+Run `sudo apt-get -y update`.
 
-(In case "sudo apt update" doesn't work: change the url part of the first entry in "/etc/apt/sources.list" to "http://legacy.raspbian.org/raspbian/")
+Make sure that the dependencies _libatlas-base-dev_ and _libsndfile1_ are installed. (`sudo apt-get install`)
 
-If necessary, run:
-
-```
-sudo apt-get install cmake
-```
-
-Upgrade the python version to 3.9.2, if necessary.
-
-Make sure that the user, who executes the inference scripts, is added to the group that can access the audio devices.
+Check that the user, who executes the watcher script, is added to the group that can access the audio devices.
 
 ## Setup the environment
 Clone the repository and navigate to it.
 
-Run the following commands:
+Run `pip install -r requirements.txt`.
 
-```bash
-python -m venv your_venv_name
+## Setup system services needed for running the watcher script
+Exemplary system service scripts for recording 60s audio files and converting them into FLAC-format are in the services_examples subfolder.
 
-source your_venv_name/bin/activate
+To mount a temporary filesystem, using tmpfs for example, run `sudo mkdir /mnt/ramdisk`.
 
-pip install -r requirements.txt
-```
-
-In case "pip install" doesn't work because of an "pip is configured with locations that require TLS/SSL, however the ssl module in Python is not available" error, try this:
-
-```bash
-sudo apt install libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev libtk8.6 libgdm-dev libdb4o-cil-dev libpcap-dev libffi-dev libatlas-base-dev
-```
-
-then cd to the folder with the Python 3.X library source code and run:
-
-```bash
-./configure 
-sudo make 
-sudo make install
-```
+Then open `/etc/fstab`and add the following entry at the bottom:  
+`tmpfs /mnt/ramdisk tmpfs nodev,nosuid,size=100M 0 0`.
 
 ## Run the code
 
