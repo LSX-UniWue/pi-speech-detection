@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SAMPLE_RATE=44100
-DESTINATION="/tmp/we4bee/audio"  # location in the temporary filesystem, where the soundfiles are to be saved to
+DESTINATION="/tmp/we4bee/wavs"  # location in the temporary filesystem, where the recorded .wav files are saved to
 LOCATION="${HOME}/code-we4bee-sensor_network/scripts/sound_compression.sh"  # location of the sound compression script
 DEVICE="plughw:Device"  # ID of the used microphone
 CHUNK_SIZE_IN_S=60  # 1 minute
